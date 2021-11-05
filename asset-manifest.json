@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/AppChat/static/css/main.b3a8032f.chunk.css",
-    "main.js": "/AppChat/static/js/main.1025349b.chunk.js",
-    "main.js.map": "/AppChat/static/js/main.1025349b.chunk.js.map",
+    "main.css": "/AppChat/static/css/main.9c656a2e.chunk.css",
+    "main.js": "/AppChat/static/js/main.a1ec1aa5.chunk.js",
+    "main.js.map": "/AppChat/static/js/main.a1ec1aa5.chunk.js.map",
     "runtime-main.js": "/AppChat/static/js/runtime-main.259dd12e.js",
     "runtime-main.js.map": "/AppChat/static/js/runtime-main.259dd12e.js.map",
-    "static/js/2.266d4f46.chunk.js": "/AppChat/static/js/2.266d4f46.chunk.js",
-    "static/js/2.266d4f46.chunk.js.map": "/AppChat/static/js/2.266d4f46.chunk.js.map",
+    "static/js/2.9dfc8eba.chunk.js": "/AppChat/static/js/2.9dfc8eba.chunk.js",
+    "static/js/2.9dfc8eba.chunk.js.map": "/AppChat/static/js/2.9dfc8eba.chunk.js.map",
     "index.html": "/AppChat/index.html",
-    "static/css/main.b3a8032f.chunk.css.map": "/AppChat/static/css/main.b3a8032f.chunk.css.map",
-    "static/js/2.266d4f46.chunk.js.LICENSE.txt": "/AppChat/static/js/2.266d4f46.chunk.js.LICENSE.txt",
+    "static/css/main.9c656a2e.chunk.css.map": "/AppChat/static/css/main.9c656a2e.chunk.css.map",
+    "static/js/2.9dfc8eba.chunk.js.LICENSE.txt": "/AppChat/static/js/2.9dfc8eba.chunk.js.LICENSE.txt",
     "static/media/add-user.09121f9f.svg": "/AppChat/static/media/add-user.09121f9f.svg",
     "static/media/attachment.756b4227.svg": "/AppChat/static/media/attachment.756b4227.svg",
     "static/media/book.2443ad18.svg": "/AppChat/static/media/book.2443ad18.svg",
@@ -36,8 +36,8 @@
   },
   "entrypoints": [
     "static/js/runtime-main.259dd12e.js",
-    "static/js/2.266d4f46.chunk.js",
-    "static/css/main.b3a8032f.chunk.css",
-    "static/js/main.1025349b.chunk.js"
+    "static/js/2.9dfc8eba.chunk.js",
+    "static/css/main.9c656a2e.chunk.css",
+    "static/js/main.a1ec1aa5.chunk.js"
   ]
 }
