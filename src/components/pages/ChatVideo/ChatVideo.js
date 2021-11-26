@@ -68,6 +68,7 @@ const Video =
     const { videoClass, setCurrentFullScreenVideo, id, selected } = props;
     const videoRef = useRef(null);
     const [isFullScreen, setIsFullScreen] = useState(false);
+    console.log(id);
     // const [videoStream, setVideoStream] = useState(null);
     // useEffect(() => {
     //   call.on("stream", (remoteStream) => {
@@ -192,7 +193,6 @@ const ChatVideo = () => {
   const streamRef = useRef(null);
   const history = useHistory();
   const [selectedVideoFullScreen, setSelectedVideoFullScreen] = useState(null);
-  console.log(listCallConnection);
   const classInfoResposive = useMemo(
     () =>
       getClassResponsiveByPeople(
@@ -201,7 +201,6 @@ const ChatVideo = () => {
       ),
     [listCallConnection, selectedVideoFullScreen]
   );
-  console.log(classInfoResposive);
   const _userInfo =
     useSelector(state => state.auth.user) ||
     parseJwt(getCookie("cn11_access_token") || "");
