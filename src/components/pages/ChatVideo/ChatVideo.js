@@ -406,14 +406,16 @@ const ChatVideo = () => {
 
   const stopShare = () => {
     if (myScreenShare && CALL_SOCKET && myVideoRef) {
-      streamRef.current.textContent = "";
-      myScreenShare.getVideoTracks()[0].stop();
-      // myVideoRef.current.classList.toggle("bottomToggleVideo");
-      setScreenShare(null);
-      CALL_SOCKET.emit("stop share", {
-        socketId: CALL_SOCKET.id,
-        id_room: id_conversation,
-      });
+      if(streamRef.current){
+        streamRef.current.textContent = "";
+        myScreenShare.getVideoTracks()[0].stop();
+        // myVideoRef.current.classList.toggle("bottomToggleVideo");
+        setScreenShare(null);
+        CALL_SOCKET.emit("stop share", {
+          socketId: CALL_SOCKET.id,
+          id_room: id_conversation,
+        });
+      }
     }
   };
 
@@ -928,7 +930,14 @@ const ChatVideo = () => {
               )}
             </>
           ) : (
-            <></>
+            <>
+            <SVGIcon
+                  name="offvideo"
+                  style={{ fill: "#fff" }}
+                  width={"30"}
+                  height={"30"}
+                />  
+            </>
           )}
         </div>
 
@@ -982,6 +991,9 @@ const ChatVideo = () => {
               socketId: CALL_SOCKET.id,
             });
             history.push("/home/message");
+            if(videoTrack){
+              videoTrack.stop();
+            }
           }}
         >
           <SVGIcon
