@@ -62,12 +62,13 @@ const getClassResponsiveByPeople = (amount, isSelectedRepresenting = false) => {
 
 const Video =
   // React.memo(
-  (props) => {
+  props => {
     const { socketId, call, socket, mic, video, type, userInfo, stream } =
       props.connection;
     const { videoClass, setCurrentFullScreenVideo, id, selected } = props;
     const videoRef = useRef(null);
     const [isFullScreen, setIsFullScreen] = useState(false);
+    console.log(id);
     // const [videoStream, setVideoStream] = useState(null);
     // useEffect(() => {
     //   call.on("stream", (remoteStream) => {
@@ -91,7 +92,7 @@ const Video =
           isFullScreen ? "videoContainerFullScreen" : ""
         }`}
         onDoubleClick={() => {
-          setCurrentFullScreenVideo((prev) => (!prev ? id : null));
+          setCurrentFullScreenVideo(prev => (!prev ? id : null));
           // setIsFullScreen((prev) => !prev);
         }}
       >
@@ -192,7 +193,6 @@ const ChatVideo = () => {
   const streamRef = useRef(null);
   const history = useHistory();
   const [selectedVideoFullScreen, setSelectedVideoFullScreen] = useState(null);
-  console.log(listCallConnection);
   const classInfoResposive = useMemo(
     () =>
       getClassResponsiveByPeople(
@@ -201,9 +201,8 @@ const ChatVideo = () => {
       ),
     [listCallConnection, selectedVideoFullScreen]
   );
-
   const _userInfo =
-    useSelector((state) => state.auth.user) ||
+    useSelector(state => state.auth.user) ||
     parseJwt(getCookie("cn11_access_token") || "");
   useEffect(() => {
     if (!_userInfo) history.push("/login");
@@ -236,7 +235,7 @@ const ChatVideo = () => {
     if (selectedVideoFullScreen !== null) {
       if (
         !listCallConnection.find(
-          (callConnection) =>
+          callConnection =>
             callConnection.type + "_" + callConnection.socketId ===
             selectedVideoFullScreen
         )
@@ -262,7 +261,7 @@ const ChatVideo = () => {
 
       setListCallConnection(
         newListCallConnection.filter(
-          (connection) => connection.socketId !== socketId
+          connection => connection.socketId !== socketId
         )
       );
     });
@@ -273,11 +272,11 @@ const ChatVideo = () => {
 
   useEffect(() => {
     // if(myStream)
-    const listener = history.listen((location) => {
+    const listener = history.listen(location => {
       if (history.action === "POP") {
         if (myStream) {
           const listTrack = myStream.getTracks();
-          listTrack.forEach((track) => {
+          listTrack.forEach(track => {
             track.stop();
           });
         }
@@ -296,7 +295,7 @@ const ChatVideo = () => {
     if (videoTrack) {
       videoTrack.stop();
       videoTrack.enabled = !videoTrack.enabled;
-      setRefresh((refresh) => !refresh);
+      setRefresh(refresh => !refresh);
       // setVideoTrack(videoTrack);
       CALL_SOCKET.emit("make change", {
         id_room: id_conversation,
@@ -307,7 +306,7 @@ const ChatVideo = () => {
     }
   };
 
-  const gotMedia = (stream) => {
+  const gotMedia = stream => {
     const video = document.createElement("video");
     video.muted = true;
     if ("srcObject" in video) {
@@ -349,7 +348,7 @@ const ChatVideo = () => {
           // googEchoCancellation:true
         },
       },
-      (stream) => {
+      stream => {
         // clear previous video
         myVideoRef.current.textContent = "";
         gotMedia(stream);
@@ -365,7 +364,7 @@ const ChatVideo = () => {
         },
         audio: false,
       })
-      .then((stream) => {
+      .then(stream => {
         setScreenShare(stream);
         if (streamRef?.current) {
           const videoScreen = document.createElement("video");
@@ -385,7 +384,7 @@ const ChatVideo = () => {
 
         // myVideoRef.current.classList.toggle("bottomToggleVideo");
       })
-      .catch((err) => {
+      .catch(err => {
         console.error("Error:" + err);
       });
   };
@@ -502,11 +501,11 @@ const ChatVideo = () => {
           ],
         },
       });
-      newPeer.on("open", (id) => {
+      newPeer.on("open", id => {
         setMyPeerId(id);
       });
 
-      newStreamPeer.on("open", (id) => {
+      newStreamPeer.on("open", id => {
         setMyStreamPeerId(id);
       });
 
@@ -556,7 +555,7 @@ const ChatVideo = () => {
   useEffect(() => {
     if (CALL_SOCKET && myStreamPeer && _userInfo) {
       CALL_SOCKET.on("share to", ({ socketList }) => {
-        socketList.map((socketId) => {
+        socketList.map(socketId => {
           CALL_SOCKET.emit("request share screen", {
             peerId: myStreamPeer._id,
             callerSocketId: CALL_SOCKET.id,
@@ -624,12 +623,12 @@ const ChatVideo = () => {
 
   useEffect(() => {
     if (myStreamPeer) {
-      myStreamPeer.on("call", (call) => {
+      myStreamPeer.on("call", call => {
         // Just one way connection
         call.answer();
 
-        call.on("stream", (remoteStream) => {
-          setListCallConnection((oldList) => [
+        call.on("stream", remoteStream => {
+          setListCallConnection(oldList => [
             ...oldList,
             {
               call,
@@ -664,7 +663,7 @@ const ChatVideo = () => {
             const newList = [
               ...listCallConnection
                 // .filter((connection)=>connection.socketId!==changeSocketId)
-                .map((connection) => {
+                .map(connection => {
                   if (connection.socketId === changeSocketId) {
                     return {
                       ...connection,
@@ -684,9 +683,9 @@ const ChatVideo = () => {
       CALL_SOCKET.off("user stop share").on(
         "user stop share",
         ({ socketId }) => {
-          setListCallConnection((oldList) => [
+          setListCallConnection(oldList => [
             ...oldList.filter(
-              (call) =>
+              call =>
                 !(call.socketId === socketId && call.type === "shareScreen")
             ),
           ]);
@@ -701,9 +700,9 @@ const ChatVideo = () => {
         id_conversation,
       });
 
-      CALL_SOCKET.on(SOCKET_ON_ACTIONS.EMIT_LIST_USER_RESPONSE, (list_user) => {
+      CALL_SOCKET.on(SOCKET_ON_ACTIONS.EMIT_LIST_USER_RESPONSE, list_user => {
         // const peers = [];
-        list_user.socketList.map((userSocketId) => {
+        list_user.socketList.map(userSocketId => {
           CALL_SOCKET.emit("request call", {
             peerId: myPeerId,
             streamPeerId: myStreamPeer._id,
@@ -739,10 +738,10 @@ const ChatVideo = () => {
             type
           );
 
-          call.on("stream", (remoteStream) => {
-            setListCallConnection((oldList) => [
+          call.on("stream", remoteStream => {
+            setListCallConnection(oldList => [
               ...oldList.filter(
-                (connection) => connection.socketId !== callerSocketId
+                connection => connection.socketId !== callerSocketId
               ),
               {
                 socketId: callerSocketId,
@@ -786,12 +785,12 @@ const ChatVideo = () => {
   // Handle call
   useEffect(() => {
     if (myPeerId && myPeer && myStream) {
-      myPeer.on("call", (call) => {
+      myPeer.on("call", call => {
         call.answer(myStream);
-        call.on("stream", (remoteStream) => {
-          setListCallConnection((oldList) => {
+        call.on("stream", remoteStream => {
+          setListCallConnection(oldList => {
             const newList = oldList.filter(
-              (connection) => connection.socketId !== call.metadata.socketId
+              connection => connection.socketId !== call.metadata.socketId
             );
             return [
               ...newList,
@@ -834,6 +833,7 @@ const ChatVideo = () => {
             }
             ref={myVideoRef}
           ></div>
+
           {myScreenShare ? (
             <div
               ref={streamRef}
@@ -861,7 +861,7 @@ const ChatVideo = () => {
                   ? classInfoResposive.videoClass
                   : "videoSelectedContainer"
               }
-              setCurrentFullScreenVideo={(id) => {
+              setCurrentFullScreenVideo={id => {
                 setSelectedVideoFullScreen(id);
               }}
               selected={selectedVideoFullScreen}

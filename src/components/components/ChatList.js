@@ -43,16 +43,19 @@ const ChatList = ({ author }) => {
       let rootElement = document.querySelector(".main__content");
 
       setTimeout(function () {
-        rootElement.scrollTop =
-          document.querySelector(`#${currentLatestMessageIndex.id}`).offsetTop -
-          document.querySelector(".card-chat").offsetTop-20;
+        if (rootElement)
+          rootElement.scrollTop =
+            document.querySelector(`#${currentLatestMessageIndex.id}`)
+              .offsetTop -
+            document.querySelector(".card-chat").offsetTop -
+            20;
       }, 100);
     }
   }, [currentLatestMessageIndex]);
 
   //listen socket
   useEffect(() => {
-    const listener = (response) => {
+    const listener = response => {
       const id_conversation = match.params.idConversation;
       const {
         messageData: { data },
@@ -138,8 +141,8 @@ const ChatList = ({ author }) => {
       {continueLoadMessageStatus === "loading" ||
       continueLoadMessageStatus === "failed" ? (
         <div className="loading-new-message-container">
-        <SpinLoading />
-          </div>
+          <SpinLoading />
+        </div>
       ) : (
         <></>
       )}
